@@ -7,9 +7,11 @@ def silver_layer_main():
     conn = get_connection()
 
     try:
+        print("Starting the process of Silver layer\n")
+
         # read data from bronze
         df = pd.read_sql("SELECT * FROM bronze_layer.supervisor_sale", conn)
-        print("Data loaded from bronze")
+        print("Data loaded from Bronze layer")
 
         # rename columns
         df = df.rename(columns={
@@ -31,6 +33,8 @@ def silver_layer_main():
 
         # data_load
         df["data_load"] = datetime.now()
+
+        print("Data transformed")
 
         with conn.cursor() as cursor:
 
@@ -73,7 +77,10 @@ def silver_layer_main():
                 ))
 
         conn.commit()
-        print("Silver layer stored successfully!")
+
+        print("all_supervisor loaded successfully")
+
+        print("Silver layer process finished successfully")
 
     except Exception as e:
         conn.rollback() 

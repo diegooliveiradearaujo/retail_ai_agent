@@ -68,7 +68,7 @@ def store_dataframe(df, conn):
                 )
             )
     conn.commit()
-
+    print("supervisor_sale loaded successfully")
 
 # capture pdf
 def capture_pdf(path_pdf):
@@ -107,6 +107,7 @@ def capture_pdf(path_pdf):
 
 # main
 def bronze_layer_main():
+    print("Starting the process of Bronze layer\n")
     root_pdf_folder = r"projects/retail_ai_agent/bronze_layer/pdf/"
 
     conn = get_connection() 
@@ -137,7 +138,7 @@ def bronze_layer_main():
 
                 store_dataframe(df, conn)  
 
-        print("Bronze layer stored successfully!")
+        print("Bronze layer process finished successfully")
 
     except Exception as e:
         conn.rollback()  

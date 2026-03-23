@@ -29,7 +29,7 @@ def create_structure():
             gender VARCHAR,
             team_supervisor VARCHAR,
 
-            cd_product VARCHER,
+            cd_product VARCHAR,
             product VARCHAR,
             category VARCHAR,
 
@@ -53,12 +53,9 @@ def create_structure():
         conn.commit()
     except Exception as e:
         conn.rollback()
-        print("Constraint already exists or error:", e)
-
+        
     cur.close()
     conn.close()
-
-    print("Gold structure created successfully!")
 
 
 # load
@@ -115,21 +112,21 @@ def load_sale_fact():
     """
 
     cur.execute(query)
-
+    print("Data loaded from Silver layer")
     conn.commit()
     cur.close()
     conn.close()
-
-    print("Sale fact loaded successfully!")
-
+    print("sale_fact loaded successfully")
 
 # main
 def gold_layer_main():
 
+    print("Starting the process of Gold layer\n")
+
     create_structure()
     load_sale_fact()
 
-    print("Gold layer stored successfully!")
+    print("Gold layer process finished successfully!")
 
 
 if __name__ == "__main__":
