@@ -1,4 +1,5 @@
-from retail_ai_agent.db import get_connection
+from retail_ai_agent.infrastructure.db import get_connection
+from retail_ai_agent.utils.logger import log_error
 
 
 # create schema and table
@@ -53,7 +54,7 @@ def create_structure():
         conn.commit()
     except Exception as e:
         conn.rollback()
-        
+ 
     cur.close()
     conn.close()
 
@@ -121,12 +122,15 @@ def load_sale_fact():
 # main
 def gold_layer_main():
 
-    print("Starting the process of Gold layer\n")
-
-    create_structure()
-    load_sale_fact()
-
-    print("Gold layer process finished successfully!")
+    try:
+        print("Starting the process of Gold layer\n")
+        create_structure()
+        load_sale_fact()
+        
+        print("Gold layer process finished successfully!")
+    except Exception as e:
+        log_error("gold_layer_main", "gold", str(e))
+        raise
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import camelot
 import pandas as pd
 import os
-from retail_ai_agent.db import get_connection
+from retail_ai_agent.infrastructure.db import get_connection
 from datetime import datetime
 
 
@@ -141,8 +141,8 @@ def bronze_layer_main():
         print("Bronze layer process finished successfully")
 
     except Exception as e:
-        conn.rollback()  
-        print(f"Error: {e}")
+        conn.rollback()
+        log_error("bronze_layer_main", "bronze", str(e))
         raise
 
     finally:

@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from retail_ai_agent.db import get_connection
+from retail_ai_agent.infrastructure.db import get_connection
 
 # main
 def silver_layer_main():
@@ -84,7 +84,7 @@ def silver_layer_main():
 
     except Exception as e:
         conn.rollback() 
-        print(f"Error: {e}")
+        log_error("silver_layer_main", "silver", str(e))
         raise
 
     finally:
@@ -92,4 +92,4 @@ def silver_layer_main():
 
 
 if __name__ == "__main__":
-    silver_layer_main()
+    silver_layer_main()        
